@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Componentes personalizados */
+.btn-primary {
+  @apply bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-all duration-300;
+}
+
+.message-container {
+  @apply h-96 overflow-y-auto mb-6 space-y-4 pr-2;
+  scrollbar-color: #3B82F6 #1F2937;
+}

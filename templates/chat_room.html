@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechShield Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos personalizados para los mensajes y scrollbar */
+        .message-container {
+            scrollbar-width: thin;
+            scrollbar-color: #3B82F6 #1F2937;
+        }
+        
+        .message-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .message-container::-webkit-scrollbar-track {
+            background: #1F2937;
+        }
+        
+        .message-container::-webkit-scrollbar-thumb {
+            background-color: #3B82F6;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-blue-900 min-h-screen">
+    <!-- Barra de navegación -->
+    <nav class="bg-black/80 backdrop-blur-md fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <span class="text-white text-2xl font-bold">TechShield Chat</span>
+                </div>
+                <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                    Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="pt-24 pb-8 max-w-3xl mx-auto px-4">
+        <!-- Estado de conexión -->
+        <div id="connection-status" class="fixed top-20 right-4 bg-black/50 backdrop-blur-sm p-4 rounded-lg shadow-lg">
+            <div class="flex items-center space-x-2">
+                <span class="text-sm font-medium text-gray-300">Estado:</span>
+                <span id="status-text" class="text-sm font-semibold text-red-500">❌ Desconectado</span>
+            </div>
+            <div class="mt-2">
+                <span class="text-sm font-medium text-gray-300">Sesión:</span>
+                <span id="current-session" class="text-sm font-semibold text-blue-400">Ninguna</span>
+            </div>
+        </div>
+
+        <!-- Panel de control de sesión -->
+        <div class="bg-black/30 backdrop-blur-sm rounded-xl p-6 mb-6 shadow-xl">
+            <div class="flex gap-4">
+                <input 
+                    type="text" 
+                    id="session_id" 
+                    placeholder="ID de sesión" 
+                    class="flex-1 bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                <button 
+                    onclick="joinSession()" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105"
+                >
+                    Unirse
+                </button>
+            </div>
+        </div>
+
+        <!-- Área de chat -->
+        <div class="bg-black/30 backdrop-blur-sm rounded-xl p-6 shadow-xl">
+            <!-- Mensajes -->
+            <div id="messages" class="message-container h-96 overflow-y-auto mb-6 space-y-4 pr-2"></div>
+
+            <!-- Entrada de mensajes -->
+            <div class="flex gap-4">
+                <input 
+                    type="text" 
+                    id="message_input" 
+                    placeholder="Escribe tu mensaje..." 
+                    class="flex-1 bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                <button 
+                    onclick="sendMessage()" 
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105"
+                >
+                    Enviar
+                </button>
+            </div>
+
+            <!-- Subida de archivos -->
+            <div class="mt-4">
+                <label class="inline-block bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-lg cursor-pointer transition-colors duration-300">
+                    <span>📎 Subir archivo</span>
+                    <input type="file" id="file_input" class="hidden">
+                </label>
+            </div>
+        </div>
+    </main>
+
+    <!-- Socket.IO y scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
