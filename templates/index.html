@@ -1,51 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunidad Electronica - Inicio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .shield-container {
-            position: relative;
-            overflow: hidden;
-        }
-        .shield-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-    </style>
-</head>
+{%extends "layout.html"%}
+{%block body%}
 <body class="bg-gradient-to-br from-gray-900 to-blue-900 min-h-screen">
-    <!-- Barra de navegación -->
-    <nav class="bg-black/80 backdrop-blur-md fixed w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <span class="text-white text-2xl font-bold">Electronica</span>
-                </div>
-                <div class="hidden md:block">
-                    <div class="flex space-x-8">
-                        <a href="/chat" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
-                            Chat
-                        </a>
-                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
-                            Que hay de nuevo en Electronica
-                        </a>
-                        <a href="#" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
-                            Comunidad
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
     <!-- Contenido principal -->
     <main class="flex flex-col items-center justify-center min-h-screen pt-20">
         <!-- Escudo animado -->
@@ -111,4 +66,5 @@
         </div>
     </footer>
 </body>
-</html>
+ 
+{%endblock%}

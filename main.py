@@ -7,17 +7,21 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Almacén de sesiones
 sessions = {}
+# Almacen de usuarios
+user_list = {}
 
 @socketio.on('join_session')
 def handle_join_session(data):
     try:
         session_id = data['session_id']
-        if not session_id:
-            raise ValueError("ID de sesión vacío")
-        
-        if session_id not in sessions:
+        user_id = data['user_id']
+        if not(session_id and user_id):
+            raise
+
+        if (session_id not in sessions) and (user_id not in user_list):
             sessions[session_id] = []
-        
+            user_list[user_id] = [request.sid] #agrega al usuario y lo guarda junto a su request
+
         sessions[session_id].append(request.sid)
         join_room(session_id)
         emit('status', {
@@ -25,13 +29,14 @@ def handle_join_session(data):
             'session': session_id
         }, room=request.sid)
         
-    except Exception as e:
-        emit('error', {'msg': str(e)})
+    except:
+        emit('error', {'msg':'Verificar valores de entrada'})
 
 @socketio.on('send_message')
 def handle_message(data):
     try:
         session_id = data['session_id']
+        user_id = data['user_id']
         content = data['content']
         
         if session_id not in sessions:
@@ -39,7 +44,7 @@ def handle_message(data):
         
         emit('new_message', {
             'content': content,
-            'sender': request.sid[-6:]  # ID abreviado
+            'sender': user_id  # nombre del usuario ID
         }, room=session_id)
         
     except Exception as e:
@@ -59,5 +64,11 @@ def index():
 @app.route('/chat')
 def chat_room():
     return render_template('chat_room.html')
+@app.route('/login')
+def loginPage():
+    return render_template('login.html')
+@app.route('/admin')
+def adminPage():
+    return render_template('admin.html')
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=5000, debug=True)
